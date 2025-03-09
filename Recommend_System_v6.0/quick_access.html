@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推荐系统快速访问</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .instructions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .online {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .offline {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>推荐系统快速访问</h1>
+        
+        <div style="text-align: center;">
+            <a href="http://localhost:5000" class="button" target="_blank">访问推荐系统</a>
+        </div>
+
+        <div class="instructions">
+            <h3>使用说明：</h3>
+            <ol>
+                <li>首次使用请以管理员身份运行 <code>start_service.bat</code></li>
+                <li>启动服务后，点击上方按钮访问系统</li>
+                <li>如需停止服务，请运行 <code>stop_service.bat</code></li>
+            </ol>
+        </div>
+
+        <div id="status" class="status">
+            正在检查服务状态...
+        </div>
+    </div>
+
+    <script>
+        function checkService() {
+            fetch('http://localhost:5000')
+                .then(response => {
+                    document.getElementById('status').className = 'status online';
+                    document.getElementById('status').innerHTML = '服务状态：在线';
+                })
+                .catch(error => {
+                    document.getElementById('status').className = 'status offline';
+                    document.getElementById('status').innerHTML = '服务状态：离线<br>请运行 start_service.bat 启动服务';
+                });
+        }
+
+        // 页面加载时检查服务状态
+        checkService();
+        // 每30秒检查一次服务状态
+        setInterval(checkService, 30000);
+    </script>
+</body>
+</html> 
