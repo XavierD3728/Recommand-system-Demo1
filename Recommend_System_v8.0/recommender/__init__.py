@@ -1,0 +1,9 @@
+"""
+Product Recommendation System Package
+"""
+
+from .recommendation import RecommendationSystem
+from .web_app import app
+
+__version__ = '1.0.0'
+__all__ = ['RecommendationSystem', 'app'] 
